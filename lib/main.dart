@@ -18,10 +18,11 @@ class MyApp extends StatelessWidget {
           fontFamily: 'Quicksand',
           appBarTheme: AppBarTheme(
               textTheme: ThemeData.light().textTheme.copyWith(
-                  title: TextStyle(
-                      fontFamily: 'OpenSans',
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold)))),
+                    title: TextStyle(
+                        fontFamily: 'OpenSans',
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold),
+                  ))),
       home: MyHomePage(),
     );
   }
@@ -35,11 +36,11 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   final List<Transaction> _userTransactions = [];
 
-  void _addNewTransaction(String title, double amount) {
+  void _addNewTransaction(String title, double amount, DateTime chosenDate) {
     final newTx = Transaction(
         title: title,
         amount: amount,
-        date: DateTime.now(),
+        date: chosenDate,
         id: DateTime.now().toString());
 
     setState(() {
@@ -65,6 +66,12 @@ class _MyHomePageState extends State<MyHomePage> {
         });
   }
 
+  void _removeTransaction(String id) {
+    setState(() {
+      _userTransactions.removeWhere((tx) => tx.id == id);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -72,7 +79,7 @@ class _MyHomePageState extends State<MyHomePage> {
         title: Text('Expense Manager'),
         actions: <Widget>[
           IconButton(
-              icon: Icon(Icons.note_add),
+              icon: Icon(Icons.add_box),
               onPressed: () => _startNewTransaction(context)),
         ],
       ),
@@ -82,13 +89,13 @@ class _MyHomePageState extends State<MyHomePage> {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
             Chart(_recentTx),
-            TransactionList(_userTransactions),
+            TransactionList(_userTransactions, _removeTransaction),
           ],
         ),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.note_add),
+        child: Icon(Icons.add_box),
         onPressed: () => _startNewTransaction(context),
       ),
     );

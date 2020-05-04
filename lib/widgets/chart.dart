@@ -21,8 +21,6 @@ class Chart extends StatelessWidget {
           totalSum += recentTx[i].amount;
         }
       }
-      print(DateFormat.E().format(weekDay));
-      print(totalSum);
       return {
         'DAY': DateFormat.E().format(weekDay).substring(0, 1),
         'amount': totalSum
