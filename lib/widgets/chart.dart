@@ -8,7 +8,6 @@ class Chart extends StatelessWidget {
   Chart(this.recentTx);
 
   List<Map<String, Object>> get groupedTxValues {
-    print("Chart Called");
     return List.generate(7, (index) {
       final weekDay = DateTime.now().subtract(
         Duration(days: index),
@@ -36,7 +35,6 @@ class Chart extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print(groupedTxValues);
     return Card(
       elevation: 6,
       margin: EdgeInsets.all(20),
